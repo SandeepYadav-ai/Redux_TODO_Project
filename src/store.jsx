@@ -35,13 +35,25 @@ console.log(store);
 
 console.log("initial :", store.getState());
 
-store.dispatch({type: ADD_TASK, payload: "mango"})
+//step 4: dispatch an action to add a task
+// store.dispatch({type: ADD_TASK, payload: "mango"})
+store.dispatch(addTask("watermallen"))
 console.log("updated state :", store.getState());
 
 store.dispatch({type: ADD_TASK, payload: "orange"})
 console.log(store.getState());
 
-store.dispatch({type: DELETE_TASK, payload: 1});
+// store.dispatch({type: DELETE_TASK, payload: 1});
+store.dispatch(deleteTask(1));
 console.log(store.getState());
+
+//step 5:create action creators
+const addTask = (data)=> {
+    return {type: ADD_TASK, payload: data}
+};
+
+const deleteTask = (id)=> {
+    return {type: DELETE_TASK, payload: id}
+}
 
 
