@@ -1,8 +1,11 @@
+import { createStore } from "redux";
+
 const ADD_TASK = "task/add"; //state/event
 const DELETE_TASK = "task/delete";
 
 const initialState = {
     task: [], 
+    initialState: false,
 };
 
 const tastReducer = (state = initialState, action)=> {
@@ -19,10 +22,26 @@ const tastReducer = (state = initialState, action)=> {
             });
             return{
                 ...state,
-                task: [...state.task, updatedTask], //don't change old state "...state.task"
+                task: updatedTask, //don't change old state "...state.task"
             };
     
         default:
             return state; //alway return new state here
     }
 };
+
+const store = createStore(tastReducer);
+console.log(store);
+
+console.log("initial :", store.getState());
+
+store.dispatch({type: ADD_TASK, payload: "mango"})
+console.log("updated state :", store.getState());
+
+store.dispatch({type: ADD_TASK, payload: "orange"})
+console.log(store.getState());
+
+store.dispatch({type: DELETE_TASK, payload: 1});
+console.log(store.getState());
+
+
