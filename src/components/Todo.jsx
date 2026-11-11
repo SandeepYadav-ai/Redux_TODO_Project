@@ -1,4 +1,9 @@
+import { MdDeleteForever } from "react-icons/md";
+import { useSelector } from "react-redux";
+
  export const Todo = ()=> {
+    const tasks = useSelector((state)=> state.task);
+
     return (
         <div className="min-h-screen bg-gray-100 px-4 py-12">
       <div className="mx-auto max-w-lg rounded-xl bg-white p-6 shadow-lg">
@@ -23,26 +28,32 @@
             Add
           </button>
         </form>
-{/* 
-        <ul className="space-y-3">
-          {tasks.map((currTask) => (
-            <li
-              key={currTask.id}
-              className="flex items-center justify-between gap-3 rounded-lg bg-gray-100 p-4"
-            >
-              <span className="break-all text-gray-800">
-                {currTask.text}
-              </span>
 
-              <button
+        <ul className="space-y-3">
+          {
+            tasks.map((currI, index)=> {
+                return <li key={index}>
+                    <p>
+                        {index}: {currI}
+                    </p>
+                    <div>
+                        <MdDeleteForever
+                        className="icon-style"
+                        onClick={()=> handleTaskDelete(index)}/>
+                    </div>
+                </li>
+            })
+          }
+
+              {/* <button
                 //onClick={() => deleteTask(currTask.id)}
                 className="shrink-0 rounded-md bg-red-500 px-3 py-2 text-sm font-medium text-white hover:bg-red-600"
               >
                 Delete
-              </button>
-            </li>
-          ))}
-        </ul> */}
+              </button> */}
+            
+          
+        </ul>
 
         {/* {tasks.length === 0 && (
           <p className="py-5 text-center text-gray-400">
