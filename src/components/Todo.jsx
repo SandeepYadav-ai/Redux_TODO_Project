@@ -1,6 +1,6 @@
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask, deleteTask } from "../store";
+import { addTask, deleteTask, fetchTask } from "../store";
 import { useState } from "react";
 
  export const Todo = ()=> {
@@ -22,6 +22,10 @@ import { useState } from "react";
       return dispatch(deleteTask(id))
     };
 
+    const handleFetchTask = ()=> {
+      return dispatch(fetchTask())
+    };
+
     return (
         <div className="min-h-screen bg-gray-100 px-4 py-12">
       <div className="mx-auto max-w-lg rounded-xl bg-white p-6 shadow-lg">
@@ -41,11 +45,15 @@ import { useState } from "react";
 
           <button
             type="submit"
-            className="rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+            className="rounded-full bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
           >
             Add
           </button>
         </form>
+
+        <button 
+          className="flex rounded-full bg-blue-600 px-5 py-3 font-semibold text-white hover:bg-blue-700"
+          onClick={handleFetchTask}>fetch Task</button>
 
         <ul className="space-x-3">
           {
