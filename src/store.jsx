@@ -1,6 +1,7 @@
-import { composeWithDevTools } from "@redux-devtools/extension";
-import { applyMiddleware, createStore } from "redux";
-import { thunk } from "redux-thunk";
+//import { composeWithDevTools } from "@redux-devtools/extension";
+import { configureStore } from "@reduxjs/toolkit";
+//import { applyMiddleware, createStore } from "redux";
+//import { thunk } from "redux-thunk";
 
 const ADD_TASK = "task/add"; //state/event
 const DELETE_TASK = "task/delete";
@@ -38,8 +39,16 @@ const tastReducer = (state = initialState, action)=> {
     }
 };
 
-export const store = createStore(tastReducer, composeWithDevTools(applyMiddleware(thunk)));
-console.log(store);
+//! (old style) step 2: create redux store using reducer 
+// export const store = createStore(tastReducer, composeWithDevTools(applyMiddleware(thunk)));
+// console.log(store);
+
+//! new style using redux toolkit
+export const store = configureStore({
+    reducer: {
+        taskReducer: tastReducer,
+    },
+});
 
 //console.log("initial :", store.getState());
 

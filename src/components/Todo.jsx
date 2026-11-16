@@ -6,7 +6,11 @@ import { useState } from "react";
  export const Todo = ()=> {
     const [task, setTask] = useState("");
 
-    const tasks = useSelector((state)=> state.task);
+    //! old redux
+    //const tasks = useSelector((state)=> state.task);
+
+    //! new style redux toolkit
+    const tasks = useSelector((state)=> state.taskReducer.task);
 
     const dispatch = useDispatch();
 
@@ -40,7 +44,7 @@ import { useState } from "react";
             value={task}
             onChange={(e) => setTask(e.target.value)}
             placeholder="Enter your task..."
-            className="min-w-0 flex-1 rounded-lg border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+            className="min-w-0 flex-1 rounded-full border border-gray-300 px-4 py-3 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
           />
 
           <button
