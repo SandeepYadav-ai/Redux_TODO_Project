@@ -1,5 +1,5 @@
 //import { composeWithDevTools } from "@redux-devtools/extension";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from "@reduxjs/toolkit";
 //import { applyMiddleware, createStore } from "redux";
 //import { thunk } from "redux-thunk";
 
@@ -12,32 +12,48 @@ const initialState = {
     initialState: false,
 };
 
-const tastReducer = (state = initialState, action)=> {
-    switch (action.type) {
-        case ADD_TASK:
-            return{
-                ...state,
-                task: [...state.task, action.payload], //don't change old state "...state.task"
-            };
+//? old style redux reducer to create action Type and action creater
+
+// const tastReducer = (state = initialState, action)=> {
+//     switch (action.type) {
+//         case ADD_TASK:
+//             return{
+//                 ...state,
+//                 task: [...state.task, action.payload], //don't change old state "...state.task"
+//             };
         
-        case DELETE_TASK:
-            const updatedTask = state.task.filter((currTask, index)=> {
-                return index !== action.payload; // if need extra info use action.payload
-            });
-            return{
-                ...state,
-                task: updatedTask, //don't change old state "...state.task"
-            };
-        case FETCH_TASKS:
-            return{
-                ...state,
-                task: [...state.task, ...action.payload],
-            };
+//         case DELETE_TASK:
+//             const updatedTask = state.task.filter((currTask, index)=> {
+//                 return index !== action.payload; // if need extra info use action.payload
+//             });
+//             return{
+//                 ...state,
+//                 task: updatedTask, //don't change old state "...state.task"
+//             };
+//         case FETCH_TASKS:
+//             return{
+//                 ...state,
+//                 task: [...state.task, ...action.payload],
+//             };
     
-        default:
-            return state; //alway return new state here
-    }
-};
+//         default:
+//             return state; //alway return new state here
+//     }
+// };
+
+//? new style (createSlice()) function using RTK redux toolkit
+const tastReducer = createSlice({
+    name: "task",
+    initialState: initialState,
+    reducers:{
+        addTAsk(state, action) {},// action creater
+        deleteTask(state, action) {},// action creater
+    },
+});
+console.log(tastReducer);
+
+const { addTAsk, deleteTask } = taskReducer.actions;// action creater
+
 
 //! (old style) step 2: create redux store using reducer 
 // export const store = createStore(tastReducer, composeWithDevTools(applyMiddleware(thunk)));
