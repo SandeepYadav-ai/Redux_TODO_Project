@@ -3,8 +3,8 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 //import { applyMiddleware, createStore } from "redux";
 //import { thunk } from "redux-thunk";
 
-const ADD_TASK = "task/add"; //state/event
-const DELETE_TASK = "task/delete";
+//const ADD_TASK = "task/add"; //state/event
+//const DELETE_TASK = "task/delete";
 const FETCH_TASKS = "task/fetch"
 
 const initialState = {
@@ -42,17 +42,22 @@ const initialState = {
 // };
 
 //? new style (createSlice()) function using RTK redux toolkit
-const tastReducer = createSlice({
+const taskReducer = createSlice({
     name: "task",
     initialState: initialState,
     reducers:{
-        addTAsk(state, action) {},// action creater
-        deleteTask(state, action) {},// action creater
+        addTask(state, action) {
+            state.task.push(action.payload);
+            //state.task = [...state.task, action.payload], do like this also
+        },// action creater
+        deleteTask(state, action) {
+            state.task = state.task.filter((currTask, index)=> index !== action.payload);
+        },// action creater
     },
 });
-console.log(tastReducer);
+console.log(taskReducer);
 
-const { addTAsk, deleteTask } = taskReducer.actions;// action creater
+const { addTask, deleteTask } = taskReducer.actions;// action creater
 
 
 //! (old style) step 2: create redux store using reducer 
@@ -62,31 +67,32 @@ const { addTAsk, deleteTask } = taskReducer.actions;// action creater
 //! new style using redux toolkit
 export const store = configureStore({
     reducer: {
-        taskReducer: tastReducer,
+        taskReducer: taskReducer.reducer,
     },
 });
 
 //console.log("initial :", store.getState());
 
 //step 5:create action creators
-export const addTask = (data)=> {
-    return {type: ADD_TASK, payload: data}
-};
+// export const addTask = (data)=> {
+//     return {type: ADD_TASK, payload: data}
+// };
 
-export const deleteTask = (id)=> {
-    return {type: DELETE_TASK, payload: id}
-}
+// export const deleteTask = (id)=> {
+//     return {type: DELETE_TASK, payload: id}
+// }
 
 //step 4: dispatch an action to add a task
 // store.dispatch({type: ADD_TASK, payload: "mango"})
-store.dispatch(addTask("mango"))
-console.log("updated state :", store.getState());
+console.log(store.dispatch(addTask("mango")));
+console.log(store.dispatch(addTask("apple")));
+console.log("updated state :", store.getState());//initiale state
 
 //store.dispatch({type: ADD_TASK, payload: "orange"})
 console.log(store.getState());
 
 // store.dispatch({type: DELETE_TASK, payload: 1});
-store.dispatch(deleteTask(1));
+//store.dispatch(deleteTask(1));
 console.log(store.getState());
 
 export const fetchTask = () => {
