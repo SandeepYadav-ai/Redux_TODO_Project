@@ -53,11 +53,14 @@ const taskReducer = createSlice({
         deleteTask(state, action) {
             state.task = state.task.filter((currTask, index)=> index !== action.payload);
         },// action creater
+        fetchTasks(state, action) {
+            state.task.push(...action.payload);
+        }
     },
 });
 console.log(taskReducer);
 
-const { addTask, deleteTask } = taskReducer.actions;// action creater
+export const { addTask, deleteTask, fetchTasks } = taskReducer.actions;// action creater
 
 
 //! (old style) step 2: create redux store using reducer 
@@ -102,7 +105,9 @@ export const fetchTask = () => {
             const task = await res.json();
             console.log(res);
             
-            dispatch({type: FETCH_TASKS, payload: task.map((curTask)=> curTask.title),});
+            //dispatch({type: FETCH_TASKS, payload: state.task.map((curTask)=> curTask.title),});
+             const taskTitle = task.map((currTask)=> currTask.title);
+            dispatch(fetchTasks(taskTitle));
         } catch (error) {
             console.log(error);
             
