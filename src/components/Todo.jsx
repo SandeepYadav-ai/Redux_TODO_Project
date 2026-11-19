@@ -1,7 +1,9 @@
 import { MdDeleteForever } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
-import { addTask, deleteTask, fetchTask } from "../store";
+
 import { useState } from "react";
+import { fetchTask } from "../store";
+import { addTask, deleteTask } from "../features/tasks/taskSlice";
 
  export const Todo = ()=> {
     const [task, setTask] = useState("");
